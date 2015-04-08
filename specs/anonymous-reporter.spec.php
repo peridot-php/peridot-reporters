@@ -13,8 +13,6 @@ describe('AnonymousReporter', function() {
     });
 
     it('should call the init function passed in', function() {
-        $configuration = null;
-        $runner = null;
         $output = null;
         $emitter = null;
         new AnonymousReporter(function(ReporterInterface $reporter) use (&$output, &$emitter) {
