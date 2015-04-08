@@ -1,0 +1,29 @@
+{
+    "name": "peridot-php/peridot-reporters",
+    "description": "Event driven reporters",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brian Scaturro",
+            "email": "scaturrob@gmail.com"
+        },
+        {
+            "name": "Austin Morris",
+            "email": "austin.morris@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Peridot\\Reporter\\": "src/"
+         }
+    },
+    "require": {
+        "peridot-php/peridot-core": "2.0.*@dev",
+        "evenement/evenement": "~2.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}
