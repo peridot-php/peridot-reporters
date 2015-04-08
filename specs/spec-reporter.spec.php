@@ -1,6 +1,5 @@
 <?php
 use Evenement\EventEmitter;
-use Peridot\Configuration;
 use Peridot\Core\Test;
 use Peridot\Reporter\SpecReporter;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -8,10 +7,9 @@ use Symfony\Component\Console\Output\BufferedOutput;
 describe('SpecReporter', function() {
 
     beforeEach(function() {
-        $this->configuration = new Configuration();
         $this->output = new BufferedOutput();
         $this->emitter = new EventEmitter();
-        $this->reporter = new SpecReporter($this->configuration, $this->output, $this->emitter);
+        $this->reporter = new SpecReporter($this->output, $this->emitter);
     });
 
     context('when test.failed is emitted', function() {
@@ -35,7 +33,7 @@ describe('SpecReporter', function() {
     describe('->color()', function() {
         context('when colors are disabled', function() {
             it('should return plain text', function() {
-                $this->configuration->disableColors();
+                $this->reporter->setColorsEnabled(false);
                 $text = $this->reporter->color('color', 'hello world');
                 assert($text == "hello world", "disabled colors should contain color sequences");
             });
@@ -44,7 +42,7 @@ describe('SpecReporter', function() {
 
     describe('->footer()', function() {
         beforeEach(function(){
-            $this->configuration->disableColors();
+            $this->reporter->setColorsEnabled(false);
 
             $exception = null;
             try {
