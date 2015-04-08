@@ -88,14 +88,6 @@ abstract class AbstractBaseReporter implements ReporterInterface
     }
 
     /**
-     * Set whether or not colors are enabled in this reporter.
-     */
-    public function setColorsEnabled($enabled)
-    {
-        $this->colorsEnabled = (bool) $enabled;
-    }
-
-    /**
      * Check if colors are enabled.
      *
      * @return bool
