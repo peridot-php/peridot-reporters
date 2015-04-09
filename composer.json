@@ -19,7 +19,8 @@
     },
     "require": {
         "peridot-php/peridot-core": "2.0.*@dev",
-        "evenement/evenement": "~2.0"
+        "evenement/evenement": "~2.0",
+        "symfony/console": "~2.0"
     },
     "extra": {
         "branch-alias": {
