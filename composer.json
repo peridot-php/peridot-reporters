@@ -19,7 +19,6 @@
     },
     "require": {
         "peridot-php/peridot-core": "2.0.*@dev",
-        "evenement/evenement": "~2.0",
         "symfony/console": "~2.0"
     },
     "extra": {
@@ -29,5 +28,7 @@
     },
     "require-dev": {
         "peridot-php/peridot": "2.0.*@dev"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

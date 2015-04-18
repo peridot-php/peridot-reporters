@@ -38,7 +38,7 @@ interface ReporterInterface
     public function getOutput();
 
     /**
-     * @return \Evenement\EventEmitterInterface
+     * @return \Peridot\EventEmitterInterface
      */
     public function getEventEmitter();
 }

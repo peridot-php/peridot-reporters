@@ -1,7 +1,7 @@
 <?php
 namespace Peridot\Reporter;
 
-use Evenement\EventEmitterInterface;
+use Peridot\EventEmitterInterface;
 use Peridot\Core\HasEventEmitterTrait;
 use Symfony\Component\Console\Output\OutputInterface;
 
