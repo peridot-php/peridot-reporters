@@ -1,5 +1,5 @@
 <?php
-use Evenement\EventEmitter;
+use Peridot\EventEmitter;
 use Peridot\Core\Suite;
 use Peridot\Reporter\AnonymousReporter;
 use Peridot\Reporter\ReporterInterface;

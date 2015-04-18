@@ -1,5 +1,5 @@
 <?php
-use Evenement\EventEmitter;
+use Peridot\EventEmitter;
 use Peridot\Reporter\AbstractBaseReporter;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\ConsoleOutput;

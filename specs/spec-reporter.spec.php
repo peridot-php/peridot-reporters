@@ -1,5 +1,5 @@
 <?php
-use Evenement\EventEmitter;
+use Peridot\EventEmitter;
 use Peridot\Core\Test;
 use Peridot\Reporter\SpecReporter;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -15,7 +15,7 @@ describe('SpecReporter', function() {
     context('when test.failed is emitted', function() {
         it('should include an error number and the test description', function() {
             $test = new Test("test", function() {});
-            $this->emitter->emit('test.failed', [$test]);
+            $this->emitter->emit('test.failed', $test);
             $contents = $this->output->fetch();
             assert(strstr($contents, '1) test') !== false, "error count and test description should be present");
         });
@@ -24,7 +24,7 @@ describe('SpecReporter', function() {
     context('when test.pending is emitted', function() {
         it('should include an error number and the test description', function() {
             $test = new Test("test", function() {});
-            $this->emitter->emit('test.pending', [$test]);
+            $this->emitter->emit('test.pending', $test);
             $contents = $this->output->fetch();
             assert(strstr($contents, '- test') !== false, "dash and test description should be present");
         });
@@ -52,9 +52,9 @@ describe('SpecReporter', function() {
             }
             $this->exception = $exception;
 
-            $this->emitter->emit('test.passed', [new Test('passing test', function() {})]);
-            $this->emitter->emit('test.failed', [new Test('failing test', function() {}), $this->exception]);
-            $this->emitter->emit('test.pending', [new Test('pending test', function(){})]);
+            $this->emitter->emit('test.passed', new Test('passing test', function() {}));
+            $this->emitter->emit('test.failed', new Test('failing test', function() {}), $this->exception);
+            $this->emitter->emit('test.pending', new Test('pending test', function(){}));
             $this->footer = $this->reporter->footer();
             $this->contents = $this->output->fetch();
         });
