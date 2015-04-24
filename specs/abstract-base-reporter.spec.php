@@ -39,10 +39,6 @@ describe('AbstractBaseReporter', function() {
             });
         });
 
-        context('when colors explicitly disabled', function () {
-
-        });
-
         context('when in a tty terminal', function() {
 
             beforeEach(function() {
@@ -54,8 +50,11 @@ describe('AbstractBaseReporter', function() {
             });
 
             it('should set the PERIDOT_TTY environment variable', function() {
-                $this->reporter->color('success', 'text');
-                assert(getenv('PERIDOT_TTY') !== false, "peridot tty environment variable should have been set");
+                //can only be tested in a posix environment
+                if (function_exists('posix_isatty')) {
+                    $this->reporter->color('success', 'text');
+                    assert(getenv('PERIDOT_TTY') !== false, "peridot tty environment variable should have been set");
+                }
             });
 
             it('should write colors if the PERIDOT_TTY environment variable is present', function() {
