@@ -1,6 +1,7 @@
 <?php
 use Peridot\EventEmitter;
 use Peridot\Core\Test;
+use Peridot\Core\Exception as PeridotException;
 use Peridot\Reporter\SpecReporter;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -81,6 +82,20 @@ describe('SpecReporter', function() {
             assert(strstr($this->contents, $expectedExceptionMessage) !== false, "should include exception message");
             $trace = preg_replace('/^#/m', "      #", $this->exception->getTraceAsString());
             assert(strstr($this->contents, $trace) !== false, "should include exception stack");
+        });
+
+        it('should honor peridot exception traces', function () {
+            $output = new BufferedOutput();
+            $emitter = new EventEmitter();
+            $reporter = new SpecReporter($output, $emitter);
+            $exception = new PeridotException('message');
+            $exception->setTraceString('trace!!');
+            $emitter->emit('test.failed', new Test('failing test', function() {}), $exception);
+            $reporter->footer();
+
+            $contents = $output->fetch();
+
+            assert(strstr($contents, 'trace!!') !== false, 'should contain manually set trace');
         });
     });
 

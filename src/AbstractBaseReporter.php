@@ -6,6 +6,7 @@ use Peridot\Configuration;
 use Peridot\Core\HasEventEmitterTrait;
 use Peridot\Core\Test;
 use Peridot\Core\TestInterface;
+use Peridot\Core\Exception as PeridotException;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 
@@ -193,16 +194,17 @@ abstract class AbstractBaseReporter implements ReporterInterface
      *
      * @param int $errorNumber
      * @param TestInterface $test
-     * @param $exception - an exception like interface with ->getMessage(), ->getTraceAsString()
+     * @param $exception
      */
-    protected function outputError($errorNumber, TestInterface $test, $exception)
+    protected function outputError($errorNumber, TestInterface $test, \Exception $exception)
     {
         $this->output->writeln(sprintf("  %d)%s:", $errorNumber, $test->getTitle()));
 
         $message = sprintf("     %s", str_replace(PHP_EOL, PHP_EOL . "     ", $exception->getMessage()));
         $this->output->writeln($this->color('error', $message));
 
-        $trace = preg_replace('/^#/m', "      #", $exception->getTraceAsString());
+        $trace = ($exception instanceof PeridotException) ? $exception->getTraceString() : $exception->getTraceAsString();
+        $trace = preg_replace('/^#/m', "      #", $trace);
         $this->output->writeln($this->color('muted', $trace));
     }
 
