@@ -3,7 +3,6 @@ namespace Peridot\Reporter;
 
 use Peridot\Core\Test;
 use Peridot\Core\Suite;
-use Peridot\Core\Context;
 
 /**
  * The SpecReporter is the default Peridot reporter. It organizes Suite and Test results
@@ -30,7 +29,7 @@ class SpecReporter extends AbstractBaseReporter
      */
     public function init()
     {
-        $this->root = Context::getInstance()->getCurrentSuite();
+        $this->root = $this->context->getCurrentSuite();
 
         $this->eventEmitter->on('runner.start', [$this, 'onRunnerStart']);
         $this->eventEmitter->on('suite.start', [$this, 'onSuiteStart']);

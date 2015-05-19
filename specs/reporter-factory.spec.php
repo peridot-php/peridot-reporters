@@ -1,6 +1,7 @@
 <?php
 use Peridot\EventEmitter;
 use Peridot\Core\Suite;
+use Peridot\Core\Context;
 use Peridot\Reporter\AnonymousReporter;
 use Peridot\Reporter\ReporterFactory;
 use Peridot\Reporter\SpecReporter;
@@ -10,7 +11,7 @@ describe('ReporterFactory', function() {
 
     beforeEach(function() {
         $output = new Symfony\Component\Console\Output\NullOutput();
-        $this->factory = new ReporterFactory($output, new EventEmitter());
+        $this->factory = new ReporterFactory($output, new EventEmitter(), Context::getInstance());
     });
 
     describe('->create()', function() {

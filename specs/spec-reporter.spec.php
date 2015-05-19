@@ -3,6 +3,7 @@ use Peridot\EventEmitter;
 use Peridot\Core\Test;
 use Peridot\Core\Exception as PeridotException;
 use Peridot\Reporter\SpecReporter;
+use Peridot\Core\Context;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 describe('SpecReporter', function() {
@@ -10,7 +11,7 @@ describe('SpecReporter', function() {
     beforeEach(function() {
         $this->output = new BufferedOutput();
         $this->emitter = new EventEmitter();
-        $this->reporter = new SpecReporter($this->output, $this->emitter);
+        $this->reporter = new SpecReporter($this->output, $this->emitter, Context::getInstance());
     });
 
     context('when test.failed is emitted', function() {
@@ -87,7 +88,7 @@ describe('SpecReporter', function() {
         it('should honor peridot exception traces', function () {
             $output = new BufferedOutput();
             $emitter = new EventEmitter();
-            $reporter = new SpecReporter($output, $emitter);
+            $reporter = new SpecReporter($output, $emitter, Context::getInstance());
             $exception = new PeridotException('message');
             $exception->setTraceString('trace!!');
             $emitter->emit('test.failed', new Test('failing test', function() {}), $exception);
