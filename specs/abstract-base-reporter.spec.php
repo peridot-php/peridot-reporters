@@ -1,5 +1,6 @@
 <?php
 use Peridot\EventEmitter;
+use Peridot\Core\Context;
 use Peridot\Reporter\AbstractBaseReporter;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -10,7 +11,8 @@ describe('AbstractBaseReporter', function() {
     beforeEach(function() {
         $output = new NullOutput();
         $emitter = new EventEmitter();
-        $this->reporter = new WindowsTestReporter($output, $emitter);
+        $this->context = Context::getInstance();
+        $this->reporter = new WindowsTestReporter($output, $emitter, $this->context);
     });
 
     describe('->symbol()', function() {
@@ -42,7 +44,7 @@ describe('AbstractBaseReporter', function() {
         context('when in a tty terminal', function() {
 
             beforeEach(function() {
-                $this->reporter = new TtyTestReporter(new ConsoleOutput(), new EventEmitter());
+                $this->reporter = new TtyTestReporter(new ConsoleOutput(), new EventEmitter(), $this->context);
             });
 
             afterEach(function() {
@@ -65,7 +67,7 @@ describe('AbstractBaseReporter', function() {
 
             it('should not write colors when output is not a stream output', function () {
                 $output = new BufferedOutput();
-                $reporter = new TtyTestReporter($output, new EventEmitter());
+                $reporter = new TtyTestReporter($output, new EventEmitter(), $this->context);
                 $text = $reporter->color('success', 'text');
                 assert($text == 'text', 'should not have colored text');
             });
