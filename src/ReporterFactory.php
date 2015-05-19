@@ -3,6 +3,7 @@ namespace Peridot\Reporter;
 
 use Peridot\EventEmitterInterface;
 use Peridot\Core\HasEventEmitterTrait;
+use Peridot\Core\Context;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -20,6 +21,11 @@ class ReporterFactory
     protected $output;
 
     /**
+     * @var \Peridot\Core\Context
+     */
+    protected $context;
+
+    /**
      * Registered reporters
      *
      * @var array
@@ -34,10 +40,12 @@ class ReporterFactory
      */
     public function __construct(
         OutputInterface $output,
-        EventEmitterInterface $eventEmitter
+        EventEmitterInterface $eventEmitter,
+        Context $context
     ) {
         $this->output = $output;
         $this->eventEmitter = $eventEmitter;
+        $this->context = $context;
     }
 
     /**
@@ -53,11 +61,11 @@ class ReporterFactory
         $isClass = is_string($factory) && class_exists($factory);
 
         if ($isClass) {
-            return new $factory($this->output, $this->eventEmitter);
+            return new $factory($this->output, $this->eventEmitter, $this->context);
         }
 
         if (is_callable($factory)) {
-            return new AnonymousReporter($factory, $this->output, $this->eventEmitter);
+            return new AnonymousReporter($factory, $this->output, $this->eventEmitter, $this->context);
         }
 
         throw new \RuntimeException("Reporter class could not be created");

@@ -7,6 +7,7 @@ use Peridot\Core\HasEventEmitterTrait;
 use Peridot\Core\Test;
 use Peridot\Core\TestInterface;
 use Peridot\Core\Exception as PeridotException;
+use Peridot\Core\Context;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 
@@ -24,6 +25,11 @@ abstract class AbstractBaseReporter implements ReporterInterface
      * @var \Symfony\Component\Console\Output\OutputInterface
      */
     protected $output;
+
+    /**
+     * @var \Peridot\Core\Context
+     */
+    protected $context;
 
     /**
      * @var array
@@ -78,10 +84,12 @@ abstract class AbstractBaseReporter implements ReporterInterface
      */
     public function __construct(
         OutputInterface $output,
-        EventEmitterInterface $eventEmitter
+        EventEmitterInterface $eventEmitter,
+        Context $context
     ) {
         $this->output = $output;
         $this->eventEmitter = $eventEmitter;
+        $this->context = $context;
 
         $this->registerSymbols();
         $this->registerEvents();
